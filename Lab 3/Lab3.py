@@ -23,7 +23,7 @@ class Problem:
         state. The result would typically be a list, but if there are
         many actions, consider yielding them one at a time in an
         iterator, rather than building them all at once."""
-        raise NotImplementedError
+        
 
     def result(self, state, action):
         """Return the state that results from executing the given
@@ -111,3 +111,34 @@ class EightPuzzle(Problem):
 
 #Write a method "Play" which allows the user to play the i.e by moving the 0 in different positions on board. Print the state after each move and show a message if the goal state has been reached.
 
+    def play(self):
+        """Allows the user to play the game by moving the blank space in different positions on the board"""
+
+        state = self.initial
+
+        while not self.goal_test(state):
+            for i in range(3):    
+                # print(state[i * 3], state[i * 3 + 1], state[i * 3 + 2], sep="-")
+                # print e instead of 0
+                print(state[i * 3] if state[i * 3] != 0 else "e", state[i * 3 + 1] if state[i * 3 + 1] != 0 else "e", state[i * 3 + 2] if state[i * 3 + 2] != 0 else "e", sep="-")
+            print("Enter a move (UP, DOWN, LEFT, RIGHT):")
+            move = input().upper()
+
+            if move not in self.actions(state):
+                print("Invalid move!")
+                continue
+
+            state = self.result(state, move)
+
+        print("Congratulations, you have solved the puzzle!")
+    
+
+def main():
+    """Main function"""
+
+    initial_state = (1, 0, 2, 6, 3, 4, 7, 5, 8)
+    puzzle = EightPuzzle(initial_state)
+    puzzle.play()
+
+if __name__ == "__main__":
+    main()
